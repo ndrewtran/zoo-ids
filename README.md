@@ -89,6 +89,72 @@ generateId('togglecase', { caseStyle: 'togglecase' }); // sTuNnInGdEsCrIpTiVepEa
 
 Defaults to `'titlecase'`.
 
+## REST API
+
+Run a local API server:
+
+```bash
+$ npm run api
+```
+
+The server starts on `http://localhost:3000` by default. Set `PORT` to use a different port.
+
+### Endpoints
+
+#### `GET /health`
+
+Returns API health status.
+
+#### `GET /id`
+
+Generate an ID with query parameters.
+
+Supported query parameters:
+
+- `seed`
+- `numAdjectives`
+- `delimiter`
+- `caseStyle` (`titlecase`, `camelcase`, `uppercase`, `lowercase`, `togglecase`)
+
+Example:
+
+```bash
+$ curl "http://localhost:3000/id?seed=my-seed&numAdjectives=3&delimiter=-&caseStyle=lowercase"
+```
+
+#### `POST /id`
+
+Generate an ID with JSON body.
+
+Example:
+
+```bash
+$ curl -X POST "http://localhost:3000/id" \
+	-H "Content-Type: application/json" \
+	-d '{"seed":{"userId":42},"options":{"numAdjectives":3,"delimiter":"-","caseStyle":"lowercase"}}'
+```
+
+### Test API Endpoints
+
+```bash
+$ npm run test:api
+```
+
+## Docker
+
+Build and run the API container:
+
+```bash
+$ docker build -t zoo-ids-api .
+$ docker run --rm -p 3000:3000 zoo-ids-api
+```
+
+Then call the API:
+
+```bash
+$ curl "http://localhost:3000/health"
+```
+
 ## Credits
 
 This project was inspired by the url ids used by [gfycat.com](https://gfycat.com).

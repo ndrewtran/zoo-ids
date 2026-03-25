@@ -11,6 +11,9 @@
 	"scripts": {
 		"prepare": "rollup -c && tsc",
 		"example": "npm run prepare && node -e \"const { generateId } = require('./dist/index.js'); const a = generateId(); const b = generateId('my-seed'); const c = generateId('my-seed'); const d = generateId({ userId: 42 }, { numAdjectives: 3, delimiter: '-', caseStyle: 'lowercase' }); console.log('randomId:', a); console.log('deterministicA:', b); console.log('deterministicB:', c); console.log('same deterministic seed:', b === c); console.log('customId:', d);\"",
+		"preapi": "npm run prepare",
+		"api": "node api/server.js",
+		"test:api": "npm run prepare && jest --collectCoverage=false src/api.test.ts",
 		"pretest": "eslint --ignore-path .gitignore .",
 		"test": "jest --collect-coverage",
 		"lint": "eslint --ignore-path .gitignore .",
@@ -41,6 +44,7 @@
 	"devDependencies": {
 		"@rollup/plugin-typescript": "^8.5.0",
 		"@types/jest": "^27.5.2",
+		"@types/supertest": "^7.2.0",
 		"@typescript-eslint/eslint-plugin": "^4.33.0",
 		"@typescript-eslint/parser": "^4.33.0",
 		"eslint": "^7.32.0",
@@ -50,8 +54,12 @@
 		"jest-extended": "^1.2.1",
 		"prettier": "^2.8.8",
 		"rollup": "^2.80.0",
+		"supertest": "^7.2.2",
 		"ts-jest": "^27.1.5",
 		"tslib": "^2.8.1",
 		"typescript": "^4.9.5"
+	},
+	"dependencies": {
+		"express": "^5.2.1"
 	}
 }
